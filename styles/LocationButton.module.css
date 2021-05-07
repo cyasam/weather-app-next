@@ -1,0 +1,26 @@
+.location {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+}
+
+.error {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 250px;
+  text-align: center;
+  color: #fff;
+  background-color: rgba(255, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 0.7rem 0.8rem;
+}
+
+.button {
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}

@@ -1,0 +1,42 @@
+.card {
+  width: 100%;
+  margin: 0 3rem 0 0;
+  padding: 1.5rem;
+  text-align: left;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.card:last-child {
+  margin-right: 0;
+}
+
+.card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+}
+
+.degrees {
+  display: flex;
+  margin: 1rem 0 0 0;
+  font-size: 1.8rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.degrees p {
+  margin: 0;
+}
+
+.seperator {
+  margin: 0 0.3rem;
+}
+
+@media (max-width: 767px) {
+  .card {
+    margin: 1.5rem 0;
+  }
+}
