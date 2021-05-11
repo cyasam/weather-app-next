@@ -14,3 +14,12 @@ a {
 * {
   box-sizing: border-box;
 }
+
+main {
+  background-color: #4d7be0;
+  min-height: 100vh;
+}
+
+.night {
+  background-color: #2b2b2b;
+}

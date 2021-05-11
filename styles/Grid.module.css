@@ -1,12 +1,12 @@
 .wrapper {
   width: 100%;
-  padding: 2rem;
+  margin-top: 3rem;
+  overflow-x: auto;
 }
 
 .grid {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 .header {

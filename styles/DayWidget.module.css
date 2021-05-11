@@ -31,10 +31,20 @@
   font-style: italic;
 }
 
-.degree {
+.degrees {
+  display: flex;
+  margin: 1rem 0 0 0;
   font-size: 8rem;
   font-weight: 500;
   line-height: 1;
+}
+
+.degrees p {
+  margin: 0;
+}
+
+.seperator {
+  margin: 0 0.3rem;
 }
 
 .details {

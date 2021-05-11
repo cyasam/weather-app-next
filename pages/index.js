@@ -1,82 +1,99 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import requestIp from 'request-ip';
 
 import Head from 'next/head';
 
+import { checkIsNight, getLocation, handleLocation } from '../util';
 import { getWeatherData } from '../util/requests';
+import AppContext from '../context/AppContext';
+
 import CurrentWidget from '../components/CurrentWidget';
-import Grid from '../components/Grid';
-import { checkIsNight, getLocation } from '../util';
 import SearchBox from '../components/SearchBox';
 import Loading from '../components/Loading';
+import Grid from '../components/Grid';
+import DayGridItem from '../components/DayGridItem';
 
 import styles from '../styles/Home.module.css';
 
-export default function Home({ weatherAllData }) {
-  const [loading, setLoading] = useState(false);
-  const [weatherData, setWeatherData] = useState(weatherAllData);
+export default function Home({ data }) {
+  const { state, dispatch } = useContext(AppContext);
   const [hasLocation, setHasLocation] = useState(null);
 
-  const handleLocation = async () => {
+  const getData = async () => {
     try {
       const pos = await getLocation();
 
       if (pos) {
         setHasLocation(true);
         localStorage.setItem('hasLocation', true);
-        setLoading(true);
 
         const query = `${pos.coords.latitude},${pos.coords.longitude}`;
 
-        const data = await getWeatherData({ query });
-
-        setWeatherData(data);
-        setLoading(false);
+        handleLocation(query, dispatch);
       }
-    } catch {
+    } catch (err) {
       setHasLocation(false);
       localStorage.setItem('hasLocation', false);
-      setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (localStorage.getItem('hasLocation')) {
-      const storedHasLocation = !!localStorage.getItem('hasLocation');
-      setHasLocation(storedHasLocation);
+    if (!state.data) {
+      if (localStorage.getItem('hasLocation')) {
+        const storedHasLocation = !!localStorage.getItem('hasLocation');
+        setHasLocation(storedHasLocation);
 
-      if (storedHasLocation) {
-        handleLocation();
+        if (storedHasLocation) {
+          getData();
+        }
       }
     }
   }, []);
 
-  const { local_time, tz_id } = weatherData.location;
+  const weatherData = state.data || data;
+
+  const {
+    location,
+    forecast: { forecastday },
+  } = weatherData;
+  const { local_time, tz_id } = location;
   const night = checkIsNight(local_time, tz_id);
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>Weather App</title>
+        <title>
+          {location.name} / {location.region} - Weather App
+        </title>
         <meta name="description" content="Weather App" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={`${styles.main} ${night ? styles.night : ''}`}>
+      <main className={`${styles.main} ${night ? 'night' : ''}`}>
         <CurrentWidget weatherData={weatherData} />
-        <Grid weatherData={weatherData} />
-        <SearchBox hasLocation={hasLocation} handleLocation={handleLocation} />
-        <Loading show={loading} />
+        <Grid data={forecastday}>
+          {(item) => (
+            <DayGridItem
+              key={item.date_epoch}
+              item={item}
+              location={location}
+            />
+          )}
+        </Grid>
+        <SearchBox hasLocation={hasLocation} handleLocation={getData} />
+        {state && <Loading show={state.loading} />}
       </main>
     </div>
   );
 }
 
-export const getServerSideProps = async () => {
-  let query = 'london';
+export const getServerSideProps = async (context) => {
+  const clientIp = requestIp.getClientIp(context.req);
+  let query = clientIp !== '127.0.0.1' ? clientIp : 'london';
 
   return {
     props: {
-      weatherAllData: await getWeatherData({ query }),
+      data: await getWeatherData({ query }),
     },
   };
 };

@@ -1,7 +1,12 @@
+import { useContext } from 'react';
 import { BiCurrentLocation } from 'react-icons/bi';
+
+import AppContext from '../context/AppContext';
 import styles from '../styles/LocationButton.module.css';
 
 const LocationButton = ({ hasLocation, handleLocation }) => {
+  const { state, dispatch } = useContext(AppContext);
+
   return (
     <div className={styles.location}>
       {hasLocation === false && (

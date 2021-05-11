@@ -6,7 +6,16 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
   min-height: 100vh;
   padding: 3rem;
+}
+
+.widgetblock {
+  display: flex;
+  flex-direction: column;
+  min-width: 50%;
+}
+
+.backlink {
+  align-self: start;
 }
