@@ -1,4 +1,5 @@
 import moment from 'moment-timezone';
+import NProgress from 'nprogress';
 
 import { getWeatherData } from '../util/requests';
 
@@ -48,6 +49,8 @@ export const handleLocation = async (query, dispatch) => {
       },
     });
 
+    NProgress.start();
+
     const data = await getWeatherData({ query });
 
     dispatch({
@@ -57,6 +60,8 @@ export const handleLocation = async (query, dispatch) => {
         data,
       },
     });
+
+    NProgress.done();
   } catch (err) {
     dispatch({
       type: 'ERROR',
@@ -65,5 +70,7 @@ export const handleLocation = async (query, dispatch) => {
         error: err.message,
       },
     });
+
+    NProgress.done();
   }
 };
