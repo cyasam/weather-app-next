@@ -94,9 +94,17 @@ export const getServerSideProps = async (context) => {
     query = clientIp;
   }
 
+  const data = await getWeatherData({ query });
+
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: {
-      data: await getWeatherData({ query }),
+      data,
     },
   };
 };

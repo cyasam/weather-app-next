@@ -3,9 +3,15 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import { BiArrowBack } from 'react-icons/bi';
+import requestIp from 'request-ip';
 
 import AppContext from '../../context/AppContext';
-import { checkIsNight, getDayData, convertDayOfWeek } from '../../util';
+import {
+  checkIsNight,
+  getDayData,
+  getLocalDate,
+  convertDayOfWeek,
+} from '../../util';
 import { getWeatherData } from '../../util/requests';
 
 import Grid from '../../components/Grid';
@@ -13,11 +19,12 @@ import DayWidget from '../../components/DayWidget';
 import HourGridItem from '../../components/HourGridItem';
 
 import styles from '../../styles/Day.module.css';
+import moment from 'moment';
 
 export default function Day({ data }) {
   const router = useRouter();
   const { state } = useContext(AppContext);
-  const { q: date } = router.query;
+  let { q: date } = router.query;
 
   const weatherData = state.data || data;
 
@@ -26,6 +33,11 @@ export default function Day({ data }) {
     location,
   } = weatherData;
   const { local_time, tz_id } = weatherData.location;
+
+  if (!date) {
+    date = getLocalDate(local_time, tz_id);
+  }
+
   const night = checkIsNight(local_time, tz_id);
   const dayOfWeek = convertDayOfWeek(date);
 
@@ -61,10 +73,17 @@ export default function Day({ data }) {
 
 export const getServerSideProps = async (context) => {
   let query = context.query.location;
+  const data = await getWeatherData({ query });
+
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
-      data: await getWeatherData({ query }),
+      data,
     },
   };
 };

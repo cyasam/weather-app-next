@@ -16,6 +16,10 @@ export const convertDayOfWeek = (date) => {
   return moment(date).format('dddd');
 };
 
+export const getLocalDate = (localtime, timezone) => {
+  return moment(localtime).tz(timezone).format('YYYY-MM-DD');
+};
+
 export const getDayHours = (date) => {
   return moment(date).format('H:mm');
 };
