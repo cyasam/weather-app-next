@@ -88,8 +88,11 @@ export default function Home({ data }) {
 }
 
 export const getServerSideProps = async (context) => {
-  const clientIp = requestIp.getClientIp(context.req);
-  let query = clientIp !== '127.0.0.1' ? clientIp : 'london';
+  let query = 'london';
+  if (process.env.NODE_ENV === 'production') {
+    const clientIp = requestIp.getClientIp(context.req);
+    query = clientIp;
+  }
 
   return {
     props: {

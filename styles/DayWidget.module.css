@@ -34,7 +34,7 @@
 .degrees {
   display: flex;
   margin: 1rem 0 0 0;
-  font-size: 8rem;
+  font-size: 6rem;
   font-weight: 500;
   line-height: 1;
 }
@@ -54,5 +54,9 @@
 @media (max-width: 767px) {
   .city {
     font-size: 2.2rem;
+  }
+
+  .degrees {
+    font-size: 4rem;
   }
 }
