@@ -24,8 +24,8 @@ function MyApp({ Component, pageProps }) {
     <AppContext.Provider
       value={{ state, dispatch, hasLocation, setHasLocation }}
     >
-      <Component {...pageProps} />
       <SearchBox />
+      <Component {...pageProps} />
     </AppContext.Provider>
   );
 }
