@@ -25,9 +25,9 @@ const SearchBox = () => {
 
     if (!pos) return;
 
-    await handleLocation(pos, dispatch);
-
     router.push(`/`);
+
+    await handleLocation(pos, dispatch);
   };
 
   useEffect(() => {
