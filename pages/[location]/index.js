@@ -1,21 +1,28 @@
 import { useEffect, useContext } from 'react';
-import requestIp from 'request-ip';
 
 import Head from 'next/head';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { BiArrowBack } from 'react-icons/bi';
 
-import { checkIsNight, handleLocation } from '../util';
-import { getWeatherData } from '../util/requests';
-import AppContext from '../context/AppContext';
+import { checkIsNight, handleLocation } from '../../util';
+import { getWeatherData } from '../../util/requests';
+import AppContext from '../../context/AppContext';
 
-import CurrentWidget from '../components/CurrentWidget';
-import Loading from '../components/Loading';
-import Grid from '../components/Grid';
-import DayGridItem from '../components/DayGridItem';
+import CurrentWidget from '../../components/CurrentWidget';
+import Grid from '../../components/Grid';
+import DayGridItem from '../../components/DayGridItem';
 
-import styles from '../styles/Home.module.css';
+import styles from '../../styles/Day.module.css';
 
-export default function Home({ data }) {
-  const { state, dispatch, hasLocation } = useContext(AppContext);
+export default function Location({ data }) {
+  const { state, dispatch } = useContext(AppContext);
+  const router = useRouter();
+  let { location: query } = router.query;
+
+  useEffect(() => {
+    handleLocation(query, dispatch);
+  }, [query]);
 
   const weatherData = state.data || data;
 
@@ -25,12 +32,6 @@ export default function Home({ data }) {
   } = weatherData;
   const { local_time, tz_id } = location;
   const night = checkIsNight(local_time, tz_id);
-
-  useEffect(async () => {
-    if (hasLocation) {
-      await handleLocation(hasLocation, dispatch);
-    }
-  }, [hasLocation]);
 
   return (
     <div className={styles.container}>
@@ -43,7 +44,15 @@ export default function Home({ data }) {
       </Head>
 
       <main className={`${styles.main} ${night ? 'night' : ''}`}>
-        <CurrentWidget weatherData={weatherData} />
+        <div className={styles.widgetblock}>
+          <Link href="/">
+            <a className={styles.backlink}>
+              <BiArrowBack color="#fff" size="2.5em" />
+            </a>
+          </Link>
+          <CurrentWidget weatherData={weatherData} />
+        </div>
+
         <Grid data={forecastday}>
           {(item) => (
             <DayGridItem
@@ -53,19 +62,13 @@ export default function Home({ data }) {
             />
           )}
         </Grid>
-        {state && <Loading show={state.loading} />}
       </main>
     </div>
   );
 }
 
 export const getServerSideProps = async (context) => {
-  let query = process.env.DEFAULT_CITY;
-  if (process.env.NODE_ENV === 'production') {
-    const clientIp = requestIp.getClientIp(context.req);
-    query = clientIp;
-  }
-
+  let query = context.query.location;
   const data = await getWeatherData({ query });
 
   if (!data) {

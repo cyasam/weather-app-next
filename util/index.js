@@ -3,10 +3,29 @@ import NProgress from 'nprogress';
 
 import { getWeatherData } from '../util/requests';
 
+export const getDatafromLatLon = async () => {
+  try {
+    const pos = await getLocation();
+
+    if (pos) {
+      const query = `${pos.coords.latitude},${pos.coords.longitude}`;
+      localStorage.setItem('hasLocation', query);
+
+      return query;
+    }
+  } catch {
+    return null;
+  }
+};
+
 export const convertDateFormat = (date, timezone, hours = true) => {
   let format = 'D/M';
   if (hours) {
     format = `${format}, H:mm`;
+  }
+
+  if (!timezone) {
+    return moment(date).format(format);
   }
 
   return moment(date).tz(timezone).format(format);
@@ -43,6 +62,14 @@ export const getLocation = () => {
   });
 };
 
+export const getLocationsList = () => {
+  if (!navigator.geolocation) return null;
+
+  return new Promise((res, rej) => {
+    navigator.geolocation.getCurrentPosition(res, rej);
+  });
+};
+
 export const handleLocation = async (query, dispatch) => {
   try {
     dispatch({
@@ -66,6 +93,8 @@ export const handleLocation = async (query, dispatch) => {
     });
 
     NProgress.done();
+
+    return data;
   } catch (err) {
     dispatch({
       type: 'ERROR',

@@ -7,10 +7,10 @@ const DayWidget = ({ weatherData, date }) => {
     location,
     forecast: { forecastday },
   } = weatherData;
-  const { name, region, country, tz_id } = location;
+  const { name, region, country } = location;
 
   const dayData = getDayData(date, forecastday);
-  const dateFormatted = convertDateFormat(date, tz_id, false);
+  const dateFormatted = convertDateFormat(date, null, false);
   const dayOfWeek = convertDayOfWeek(date);
 
   const {
@@ -22,10 +22,10 @@ const DayWidget = ({ weatherData, date }) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1 className={styles.city}>
-          {name}, {region}
-        </h1>
-        <h2 className={styles.country}>{country}</h2>
+        <h1 className={styles.city}>{name}</h1>
+        <h2 className={styles.country}>
+          {region}, {country}
+        </h2>
         <p className={styles.time}>
           {dateFormatted}, {dayOfWeek}
         </p>

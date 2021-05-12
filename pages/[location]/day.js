@@ -1,9 +1,8 @@
-import { useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import { BiArrowBack } from 'react-icons/bi';
-import requestIp from 'request-ip';
 
 import AppContext from '../../context/AppContext';
 import {
@@ -11,6 +10,7 @@ import {
   getDayData,
   getLocalDate,
   convertDayOfWeek,
+  handleLocation,
 } from '../../util';
 import { getWeatherData } from '../../util/requests';
 
@@ -19,12 +19,15 @@ import DayWidget from '../../components/DayWidget';
 import HourGridItem from '../../components/HourGridItem';
 
 import styles from '../../styles/Day.module.css';
-import moment from 'moment';
 
 export default function Day({ data }) {
+  const { state, dispatch } = useContext(AppContext);
   const router = useRouter();
-  const { state } = useContext(AppContext);
-  let { q: date } = router.query;
+  let { location: query, q: date } = router.query;
+
+  useEffect(() => {
+    handleLocation(query, dispatch);
+  }, [query]);
 
   const weatherData = state.data || data;
 

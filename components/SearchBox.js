@@ -1,8 +1,53 @@
-import LocationButton from '../components/LocationButton';
+import { useState, useEffect, useContext } from 'react';
 
-const SearchBox = ({ hasLocation, handleLocation }) => {
+import { useRouter } from 'next/router';
+import AppContext from '../context/AppContext';
+
+import { getDatafromLatLon, handleLocation } from '../util';
+
+import SearchInput from './SearchInput';
+import LocationButton from './LocationButton';
+
+import styles from '../styles/SearchBox.module.css';
+
+const SearchBox = () => {
+  const { hasLocation, setHasLocation, dispatch } = useContext(AppContext);
+  const [query, setQuery] = useState('');
+  const router = useRouter();
+
+  const changeSearchText = (event) => {
+    const { value } = event.target;
+    setQuery(value);
+  };
+
+  const clickLocation = async () => {
+    const pos = await getDatafromLatLon();
+
+    if (!pos) return;
+
+    await handleLocation(pos, dispatch);
+
+    router.push(`/`);
+  };
+
+  useEffect(() => {
+    if (query.length > 2) {
+      searchLocations(query);
+    }
+  }, [query]);
+
+  useEffect(() => {
+    const storedHasLocation = localStorage.getItem('hasLocation');
+    if (storedHasLocation) {
+      setHasLocation(storedHasLocation);
+    }
+  }, []);
+
   return (
-    <LocationButton hasLocation={hasLocation} handleLocation={handleLocation} />
+    <div className={styles.box}>
+      <SearchInput className={styles.input} handleChange={changeSearchText} />
+      <LocationButton hasLocation={hasLocation} onClick={clickLocation} />
+    </div>
   );
 };
 

@@ -1,21 +1,17 @@
-import { useContext } from 'react';
 import { BiCurrentLocation } from 'react-icons/bi';
 
-import AppContext from '../context/AppContext';
 import styles from '../styles/LocationButton.module.css';
 
-const LocationButton = ({ hasLocation, handleLocation }) => {
-  const { state, dispatch } = useContext(AppContext);
-
+const LocationButton = ({ hasLocation, onClick }) => {
   return (
     <div className={styles.location}>
-      {hasLocation === false && (
+      {hasLocation && !!hasLocation === false && (
         <p className={styles.error}>
           Please enable location service for your browser.
         </p>
       )}
-      <button onClick={() => handleLocation()} className={styles.button}>
-        <BiCurrentLocation color="#fff" size="2.5em" />
+      <button onClick={() => onClick()} className={styles.button}>
+        <BiCurrentLocation color="#2b2b2b" size="2.5em" />
       </button>
     </div>
   );

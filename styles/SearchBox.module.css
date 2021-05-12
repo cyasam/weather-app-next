@@ -1,0 +1,24 @@
+.box {
+  display: flex;
+  position: absolute;
+  top: 3rem;
+  right: 3rem;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  padding: 0 1rem;
+  font-size: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  outline: none;
+}
+
+.input:focus {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}

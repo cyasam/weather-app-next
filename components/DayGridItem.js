@@ -4,7 +4,7 @@ import { convertDayOfWeek } from '../util';
 import InfoWidget from './InfoWidget';
 import styles from '../styles/GridItem.module.css';
 
-const DayGridItem = ({ item, location, className }) => {
+const DayGridItem = ({ item, location }) => {
   const dayOfWeek = convertDayOfWeek(item.date);
   const { name } = location;
 
