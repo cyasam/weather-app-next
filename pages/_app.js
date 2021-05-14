@@ -19,10 +19,18 @@ Router.events.on('routeChangeError', () => NProgress.done());
 function MyApp({ Component, pageProps }) {
   const [state, dispatch] = useReducer(weatherDataReducer, initialState);
   const [hasLocation, setHasLocation] = useState(null);
+  const [searchResult, setSearchResult] = useState(null);
 
   return (
     <AppContext.Provider
-      value={{ state, dispatch, hasLocation, setHasLocation }}
+      value={{
+        state,
+        dispatch,
+        hasLocation,
+        setHasLocation,
+        searchResult,
+        setSearchResult,
+      }}
     >
       <SearchBox />
       <Component {...pageProps} />

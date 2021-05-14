@@ -1,3 +1,12 @@
+.button {
+  position: relative;
+  z-index: 11;
+  padding: 1rem;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
 .error {
   position: absolute;
   top: 100%;
@@ -8,12 +17,4 @@
   background-color: rgba(255, 0, 0, 0.2);
   border-radius: 10px;
   padding: 0.7rem 0.8rem;
-}
-
-.button {
-  padding: 0.4rem;
-  margin-left: 8px;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
 }

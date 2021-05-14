@@ -12,13 +12,13 @@ const CurrentWidget = ({ weatherData }) => {
 
   const lastUpdated = convertDateFormat(local_time, tz_id);
 
+  const countryText = `${region ? `${region},` : ''} ${country}`;
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.city}>{name}</h1>
-        <h2 className={styles.country}>
-          {region}, {country}
-        </h2>
+        <h2 className={styles.country}>{countryText}</h2>
         <p className={styles.time}>{lastUpdated}</p>
       </div>
 
