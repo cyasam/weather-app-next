@@ -25,12 +25,12 @@ const LocationFinder = ({ buttonClick }) => {
     buttonClick();
   };
 
-  useEffect(() => {
+  /* useEffect(() => {
     const storedHasLocation = localStorage.getItem('hasLocation');
     if (storedHasLocation) {
       setHasLocation(storedHasLocation);
     }
-  }, []);
+  }, []); */
 
   return (
     <div className={styles.location}>

@@ -5,6 +5,9 @@ import Router from 'next/router';
 import NProgress from 'nprogress';
 
 import AppContext from '../context/AppContext';
+import homepageWeatherDataReducer, {
+  homepageInitialState,
+} from '../reducer/homepage-weather-data';
 import weatherDataReducer, { initialState } from '../reducer/weather-data';
 
 import SearchBox from '../components/SearchBox';
@@ -17,6 +20,10 @@ Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
 function MyApp({ Component, pageProps }) {
+  const [homepageState, homepageDispatch] = useReducer(
+    homepageWeatherDataReducer,
+    homepageInitialState
+  );
   const [state, dispatch] = useReducer(weatherDataReducer, initialState);
   const [hasLocation, setHasLocation] = useState(null);
   const [searchResult, setSearchResult] = useState(null);
@@ -24,6 +31,8 @@ function MyApp({ Component, pageProps }) {
   return (
     <AppContext.Provider
       value={{
+        homepageState,
+        homepageDispatch,
         state,
         dispatch,
         hasLocation,

@@ -3,7 +3,11 @@ import requestIp from 'request-ip';
 
 import Head from 'next/head';
 
-import { checkIsNight, handleLocation } from '../util';
+import {
+  checkIsNight,
+  handleHomepageLocation,
+  getDatafromLatLon,
+} from '../util';
 import { getWeatherData } from '../util/requests';
 import AppContext from '../context/AppContext';
 
@@ -15,9 +19,10 @@ import DayGridItem from '../components/DayGridItem';
 import styles from '../styles/Home.module.css';
 
 export default function Home({ data }) {
-  const { state, dispatch, hasLocation } = useContext(AppContext);
+  const { homepageState, homepageDispatch, hasLocation } =
+    useContext(AppContext);
 
-  const weatherData = state.data || data;
+  const weatherData = homepageState.data || data;
 
   const {
     location,
@@ -27,9 +32,11 @@ export default function Home({ data }) {
   const night = checkIsNight(local_time, tz_id);
 
   useEffect(async () => {
-    if (hasLocation) {
-      await handleLocation(hasLocation, dispatch);
-    }
+    const pos = await getDatafromLatLon();
+
+    if (!pos) return;
+
+    await handleHomepageLocation(pos, homepageDispatch);
   }, [hasLocation]);
 
   return (
@@ -53,7 +60,7 @@ export default function Home({ data }) {
             />
           )}
         </Grid>
-        {state && <Loading show={state.loading} />}
+        {weatherData && <Loading show={weatherData.loading} />}
       </main>
     </div>
   );
