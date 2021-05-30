@@ -1,12 +1,9 @@
-const SearchInput = ({
-  className,
-  value,
-  handleChange,
-  handleBlur,
-  handleFocus,
-}) => {
-  return (
+import { forwardRef } from 'react';
+
+const SearchInput = forwardRef(
+  ({ className, value, handleChange, handleBlur, handleFocus }, ref) => (
     <input
+      ref={ref}
       type="search"
       value={value}
       className={className}
@@ -14,7 +11,7 @@ const SearchInput = ({
       onBlur={handleBlur}
       onFocus={handleFocus}
     />
-  );
-};
+  )
+);
 
 export default SearchInput;

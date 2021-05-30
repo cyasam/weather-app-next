@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 
 import AppContext from '../context/AppContext';
 
@@ -11,6 +11,7 @@ import LocationFinder from './LocationFinder';
 import styles from '../styles/SearchArea.module.css';
 
 const SearchArea = () => {
+  const searchInputRef = useRef(null);
   const { searchResult, setSearchResult } = useContext(AppContext);
   const [query, setQuery] = useState('');
   const [showList, setShowList] = useState(false);
@@ -30,6 +31,7 @@ const SearchArea = () => {
 
   const listItemClick = () => {
     setQuery('');
+    searchInputRef.current.blur();
   };
 
   useEffect(async () => {
@@ -48,6 +50,7 @@ const SearchArea = () => {
     <>
       <div className={styles.area}>
         <SearchInput
+          ref={searchInputRef}
           value={query}
           className={styles.input}
           handleChange={changeSearchText}
