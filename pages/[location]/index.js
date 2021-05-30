@@ -2,12 +2,10 @@ import { useEffect, useContext } from 'react';
 
 import Head from 'next/head';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { BiArrowBack } from 'react-icons/bi';
 
-import { checkIsNight, handleLocation } from '../../util';
+import { checkIsNight } from '../../util';
 import { getWeatherData } from '../../util/requests';
-import AppContext from '../../context/AppContext';
 
 import CurrentWidget from '../../components/CurrentWidget';
 import Grid from '../../components/Grid';
@@ -16,15 +14,7 @@ import DayGridItem from '../../components/DayGridItem';
 import styles from '../../styles/Day.module.css';
 
 export default function Location({ data }) {
-  const { state, dispatch } = useContext(AppContext);
-  const router = useRouter();
-  let { location: query } = router.query;
-
-  useEffect(() => {
-    handleLocation(query, dispatch);
-  }, [query]);
-
-  const weatherData = state.data || data;
+  const weatherData = data;
 
   const {
     location,

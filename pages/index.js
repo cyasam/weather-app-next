@@ -19,8 +19,7 @@ import DayGridItem from '../components/DayGridItem';
 import styles from '../styles/Home.module.css';
 
 export default function Home({ data }) {
-  const { homepageState, homepageDispatch, hasLocation } =
-    useContext(AppContext);
+  const { homepageState, homepageDispatch } = useContext(AppContext);
 
   const weatherData = homepageState.data || data;
 
@@ -37,7 +36,7 @@ export default function Home({ data }) {
     if (!pos) return;
 
     await handleHomepageLocation(pos, homepageDispatch);
-  }, [hasLocation]);
+  }, []);
 
   return (
     <div className={styles.container}>

@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -10,7 +10,6 @@ import {
   getDayData,
   getLocalDate,
   convertDayOfWeek,
-  handleLocation,
 } from '../../util';
 import { getWeatherData } from '../../util/requests';
 
@@ -21,15 +20,10 @@ import HourGridItem from '../../components/HourGridItem';
 import styles from '../../styles/Day.module.css';
 
 export default function Day({ data }) {
-  const { state, dispatch } = useContext(AppContext);
   const router = useRouter();
-  let { location: query, q: date } = router.query;
+  let { q: date } = router.query;
 
-  useEffect(() => {
-    handleLocation(query, dispatch);
-  }, [query]);
-
-  const weatherData = state.data || data;
+  const weatherData = data;
 
   const {
     forecast: { forecastday },
