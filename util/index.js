@@ -69,44 +69,6 @@ export const getLocationsList = () => {
   });
 };
 
-export const handleLocation = async (query, dispatch) => {
-  try {
-    dispatch({
-      type: 'LOADING',
-      payload: {
-        loading: true,
-        error: null,
-      },
-    });
-
-    NProgress.start();
-
-    const data = await getWeatherData({ query });
-
-    dispatch({
-      type: 'SUCCESS',
-      payload: {
-        loading: false,
-        data,
-      },
-    });
-
-    NProgress.done();
-
-    return data;
-  } catch (err) {
-    dispatch({
-      type: 'ERROR',
-      payload: {
-        loading: false,
-        error: err.message,
-      },
-    });
-
-    NProgress.done();
-  }
-};
-
 export const handleHomepageLocation = async (query, dispatch) => {
   try {
     dispatch({
@@ -135,44 +97,6 @@ export const handleHomepageLocation = async (query, dispatch) => {
   } catch (err) {
     dispatch({
       type: 'HOMEPAGE_ERROR',
-      payload: {
-        loading: false,
-        error: err.message,
-      },
-    });
-
-    NProgress.done();
-  }
-};
-
-export const handleHourspageLocation = async (query, dispatch) => {
-  try {
-    dispatch({
-      type: 'HOURSPAGE_LOADING',
-      payload: {
-        loading: true,
-        error: null,
-      },
-    });
-
-    NProgress.start();
-
-    const data = await getWeatherData({ query });
-
-    dispatch({
-      type: 'HOURSPAGE_SUCCESS',
-      payload: {
-        loading: false,
-        data,
-      },
-    });
-
-    NProgress.done();
-
-    return data;
-  } catch (err) {
-    dispatch({
-      type: 'HOURSPAGE_ERROR',
       payload: {
         loading: false,
         error: err.message,
