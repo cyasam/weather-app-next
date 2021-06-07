@@ -1,10 +1,10 @@
 import styles from '../styles/Loading.module.css';
-import MoonLoader from 'react-spinners/ClipLoader';
+import BeatLoader from 'react-spinners/BeatLoader';
 
-const Loading = ({ show }) => {
+const Loading = ({ show, size, color }) => {
   return (
     <div className={`${styles.loading} ${show ? styles.show : styles.hide}`}>
-      <MoonLoader size={40} loading={true} color="#fff" />
+      <BeatLoader size={size || 15} loading={true} color={color || '#000'} />
     </div>
   );
 };

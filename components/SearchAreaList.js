@@ -4,24 +4,20 @@ import Link from 'next/link';
 const SearchAreaList = ({ searchResult, listItemClick }) => {
   return (
     <>
-      {searchResult && (
-        <div className={styles.result}>
-          {searchResult.length > 1 ? (
-            <ul className={styles.list}>
-              {searchResult.map((item) => {
-                return (
-                  <SearchAreaList.Item
-                    key={item.id}
-                    item={item}
-                    listItemClick={listItemClick}
-                  />
-                );
-              })}
-            </ul>
-          ) : (
-            <SearchAreaList.NoItem />
-          )}
-        </div>
+      {searchResult.length > 1 ? (
+        <ul className={styles.list}>
+          {searchResult.map((item) => {
+            return (
+              <SearchAreaList.Item
+                key={item.id}
+                item={item}
+                listItemClick={listItemClick}
+              />
+            );
+          })}
+        </ul>
+      ) : (
+        <SearchAreaList.NoItem />
       )}
     </>
   );

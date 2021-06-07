@@ -24,7 +24,11 @@ function MyApp({ Component, pageProps }) {
     homepageInitialState
   );
 
-  const [searchResult, setSearchResult] = useState(null);
+  const [searchResult, setSearchResult] = useState({
+    loading: false,
+    data: null,
+    error: null,
+  });
 
   return (
     <AppContext.Provider

@@ -1,0 +1,18 @@
+.loadingwrapper {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  margin: 2rem 0 0 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.result {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% - 2rem);
+  z-index: 10;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 0 0 10px 10px;
+}

@@ -5,7 +5,7 @@ import AppContext from '../context/AppContext';
 import { searchLocations } from '../util/requests';
 
 import SearchInput from './SearchInput';
-import SearchAreaList from './SearchAreaList';
+import SearchAreaListContainer from './SearchAreaListContainer';
 import LocationFinder from './LocationFinder';
 
 import styles from '../styles/SearchArea.module.css';
@@ -22,7 +22,7 @@ const SearchArea = () => {
   };
 
   const blurSearchText = () => {
-    setTimeout(() => setShowList(false), 100);
+    //setTimeout(() => setShowList(false), 100);
   };
 
   const focusSearchText = () => {
@@ -36,29 +36,56 @@ const SearchArea = () => {
 
   useEffect(async () => {
     if (query.length <= 2) {
-      setSearchResult(null);
       setShowList(false);
+
+      setSearchResult((prevState) => {
+        return {
+          ...prevState,
+          loading: false,
+          data: null,
+          error: null,
+        };
+      });
     } else if (query.length > 2) {
+      setShowList(true);
+
+      setSearchResult((prevState) => {
+        return {
+          ...prevState,
+          loading: true,
+          error: null,
+        };
+      });
+
       const result = await searchLocations({ query });
 
-      setSearchResult(result);
-      setShowList(true);
+      setSearchResult((prevState) => {
+        return {
+          ...prevState,
+          loading: false,
+          data: result,
+          error: null,
+        };
+      });
     }
   }, [query]);
 
   return (
     <>
       <div className={styles.area}>
-        <SearchInput
-          ref={searchInputRef}
-          value={query}
-          className={styles.input}
-          handleChange={changeSearchText}
-          handleBlur={blurSearchText}
-          handleFocus={focusSearchText}
-        />
+        <div className={styles.inputwrapper}>
+          <SearchInput
+            ref={searchInputRef}
+            value={query}
+            className={styles.input}
+            handleChange={changeSearchText}
+            handleBlur={blurSearchText}
+            handleFocus={focusSearchText}
+          />
+        </div>
+
         {showList && (
-          <SearchAreaList
+          <SearchAreaListContainer
             searchResult={searchResult}
             listItemClick={listItemClick}
           />

@@ -1,15 +1,4 @@
-.result {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(100% - 2rem);
-  z-index: 10;
-  width: 100%;
-  background-color: #fff;
-  border-radius: 0 0 10px 10px;
-}
-
-.result .list {
+.list {
   max-height: 400px;
   overflow: auto;
   list-style: none;
@@ -17,15 +6,15 @@
   padding: 0;
 }
 
-.result li {
+.list li {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.result li:first-child {
+.list li:first-child {
   border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.result li a {
+.list li a {
   display: block;
   padding: 1rem;
 }

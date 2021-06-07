@@ -12,7 +12,6 @@ import { getWeatherData } from '../util/requests';
 import AppContext from '../context/AppContext';
 
 import CurrentWidget from '../components/CurrentWidget';
-import Loading from '../components/Loading';
 import Grid from '../components/Grid';
 import DayGridItem from '../components/DayGridItem';
 
@@ -60,8 +59,6 @@ export default function Home({ data }) {
             />
           )}
         </Grid>
-
-        {weatherData && <Loading show={weatherData.loading} />}
       </main>
     </div>
   );
