@@ -3,6 +3,7 @@ import { useState, useEffect, useContext, useRef } from 'react';
 import AppContext from '../context/AppContext';
 
 import { searchLocations } from '../util/requests';
+import { useDebounce } from '../util/custom-hooks';
 
 import SearchInput from './SearchInput';
 import SearchAreaListContainer from './SearchAreaListContainer';
@@ -34,8 +35,10 @@ const SearchArea = () => {
     searchInputRef.current.blur();
   };
 
+  const debouncedQuery = useDebounce(query, 500);
+
   useEffect(async () => {
-    if (query.length <= 2) {
+    if (debouncedQuery.length <= 2) {
       setShowList(false);
 
       setSearchResult((prevState) => {
@@ -46,7 +49,7 @@ const SearchArea = () => {
           error: null,
         };
       });
-    } else if (query.length > 2) {
+    } else if (debouncedQuery.length > 2) {
       setShowList(true);
 
       setSearchResult((prevState) => {
@@ -57,7 +60,7 @@ const SearchArea = () => {
         };
       });
 
-      const result = await searchLocations({ query });
+      const result = await searchLocations({ query: debouncedQuery });
 
       setSearchResult((prevState) => {
         return {
@@ -68,7 +71,7 @@ const SearchArea = () => {
         };
       });
     }
-  }, [query]);
+  }, [debouncedQuery]);
 
   return (
     <>
