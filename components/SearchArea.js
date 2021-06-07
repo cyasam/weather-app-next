@@ -22,7 +22,7 @@ const SearchArea = () => {
   };
 
   const blurSearchText = () => {
-    //setTimeout(() => setShowList(false), 100);
+    setTimeout(() => setShowList(false), 100);
   };
 
   const focusSearchText = () => {
