@@ -32,7 +32,7 @@ const SearchArea = () => {
 
   const listItemClick = () => {
     setQuery('');
-    searchInputRef.current.blur();
+    blurSearchText();
   };
 
   const debouncedQuery = useDebounce(query, 500);

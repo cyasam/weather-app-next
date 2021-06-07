@@ -34,7 +34,7 @@ SearchAreaList.Item = ({ item, listItemClick }) => {
     <li>
       <Link href={`/${url}`}>
         <a onClick={listItemClick}>
-          <p className={styles.name}>{name}</p>
+          <span className={styles.name}>{name}</span>
         </a>
       </Link>
     </li>
