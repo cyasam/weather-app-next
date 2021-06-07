@@ -50,6 +50,7 @@ export default function Home({ data }) {
 
       <main className={`${styles.main} ${night ? 'night' : ''}`}>
         <CurrentWidget weatherData={weatherData} />
+
         <Grid data={forecastday}>
           {(item) => (
             <DayGridItem
@@ -59,6 +60,7 @@ export default function Home({ data }) {
             />
           )}
         </Grid>
+
         {weatherData && <Loading show={weatherData.loading} />}
       </main>
     </div>

@@ -1,13 +1,13 @@
 .wrapper {
   width: 100%;
   margin-top: 3rem;
-  overflow-x: auto;
 }
 
 .grid {
   display: flex;
   align-items: center;
   padding-bottom: 1rem;
+  cursor: grab;
 }
 
 .header {

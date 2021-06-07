@@ -1,3 +1,5 @@
+import ScrollContainer from 'react-indiana-drag-scroll';
+
 import styles from '../styles/Grid.module.css';
 
 const Grid = ({ data, children }) => {
@@ -7,11 +9,13 @@ const Grid = ({ data, children }) => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.grid}>
-        {data.map((day) => {
-          return children(day);
-        })}
-      </div>
+      <ScrollContainer className="scroll-container" hideScrollbars={false}>
+        <div className={styles.grid}>
+          {data.map((day) => {
+            return children(day);
+          })}
+        </div>
+      </ScrollContainer>
     </div>
   );
 };

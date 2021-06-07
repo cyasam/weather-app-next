@@ -1,10 +1,9 @@
-import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import { BiArrowBack } from 'react-icons/bi';
+import ScrollContainer from 'react-indiana-drag-scroll';
 
-import AppContext from '../../context/AppContext';
 import {
   checkIsNight,
   getDayData,
