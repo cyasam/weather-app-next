@@ -2,6 +2,7 @@ import { useEffect, useContext } from 'react';
 import requestIp from 'request-ip';
 
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 
 import {
   checkIsNight,
@@ -11,11 +12,12 @@ import {
 import { getWeatherData } from '../util/requests';
 import AppContext from '../context/AppContext';
 
-import CurrentWidget from '../components/CurrentWidget';
-import Grid from '../components/Grid';
-import DayGridItem from '../components/DayGridItem';
-
 import styles from '../styles/Home.module.css';
+
+// Load Components
+const CurrentWidget = dynamic(() => import('../components/CurrentWidget'));
+const Grid = dynamic(() => import('../components/Grid'));
+const DayGridItem = dynamic(() => import('../components/DayGridItem'));
 
 export default function Home({ data }) {
   const { homepageState, homepageDispatch } = useContext(AppContext);

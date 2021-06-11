@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Link from 'next/link';
+
 import { BiArrowBack } from 'react-icons/bi';
-import ScrollContainer from 'react-indiana-drag-scroll';
 
 import {
   checkIsNight,
@@ -12,11 +13,12 @@ import {
 } from '../../util';
 import { getWeatherData } from '../../util/requests';
 
-import Grid from '../../components/Grid';
-import DayWidget from '../../components/DayWidget';
-import HourGridItem from '../../components/HourGridItem';
-
 import styles from '../../styles/Day.module.css';
+
+// Load Components
+const DayWidget = dynamic(() => import('../../components/DayWidget'));
+const Grid = dynamic(() => import('../../components/Grid'));
+const HourGridItem = dynamic(() => import('../../components/HourGridItem'));
 
 export default function Day({ data }) {
   const router = useRouter();

@@ -1,17 +1,18 @@
-import { useEffect, useContext } from 'react';
-
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Link from 'next/link';
+
 import { BiArrowBack } from 'react-icons/bi';
 
 import { checkIsNight } from '../../util';
 import { getWeatherData } from '../../util/requests';
 
-import CurrentWidget from '../../components/CurrentWidget';
-import Grid from '../../components/Grid';
-import DayGridItem from '../../components/DayGridItem';
-
 import styles from '../../styles/Day.module.css';
+
+// Load Components
+const CurrentWidget = dynamic(() => import('../../components/CurrentWidget'));
+const Grid = dynamic(() => import('../../components/Grid'));
+const DayGridItem = dynamic(() => import('../../components/DayGridItem'));
 
 export default function Location({ data }) {
   const weatherData = data;
