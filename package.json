@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "framer-motion": "^4.1.17",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",
     "next": "10.2.0",

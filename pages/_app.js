@@ -3,6 +3,7 @@ import '../styles/globals.css';
 import { useState, useReducer } from 'react';
 import Router from 'next/router';
 import NProgress from 'nprogress';
+import { AnimatePresence } from 'framer-motion';
 
 import AppContext from '../context/AppContext';
 import homepageWeatherDataReducer, {
@@ -18,7 +19,7 @@ Router.events.on('routeChangeStart', () => {
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, router }) {
   const [homepageState, homepageDispatch] = useReducer(
     homepageWeatherDataReducer,
     homepageInitialState
@@ -40,7 +41,9 @@ function MyApp({ Component, pageProps }) {
       }}
     >
       <SearchBox />
-      <Component {...pageProps} />
+      <AnimatePresence exitBeforeEnter initial={false}>
+        <Component key={router.route} {...pageProps} />
+      </AnimatePresence>
     </AppContext.Provider>
   );
 }

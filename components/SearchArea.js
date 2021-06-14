@@ -17,6 +17,8 @@ const SearchArea = () => {
   const [query, setQuery] = useState('');
   const [showList, setShowList] = useState(false);
 
+  const debouncedQuery = useDebounce(query, 500);
+
   const changeSearchText = (event) => {
     const { value } = event.target;
     setQuery(value);
@@ -27,15 +29,13 @@ const SearchArea = () => {
   };
 
   const focusSearchText = () => {
-    setShowList(true);
+    setShowList(!!(debouncedQuery.length > 2));
   };
 
   const listItemClick = () => {
     setQuery('');
     blurSearchText();
   };
-
-  const debouncedQuery = useDebounce(query, 500);
 
   useEffect(async () => {
     if (debouncedQuery.length <= 2) {

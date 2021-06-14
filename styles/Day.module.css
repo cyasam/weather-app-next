@@ -15,8 +15,3 @@
   flex-direction: column;
   min-width: 50%;
 }
-
-.backlink {
-  align-self: start;
-  margin-bottom: 2rem;
-}

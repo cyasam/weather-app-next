@@ -1,9 +1,6 @@
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import Link from 'next/link';
-
-import { BiArrowBack } from 'react-icons/bi';
 
 import {
   checkIsNight,
@@ -12,6 +9,8 @@ import {
   convertDayOfWeek,
 } from '../../util';
 import { getWeatherData } from '../../util/requests';
+
+import BackButton from '../../components/BackButton';
 
 import styles from '../../styles/Day.module.css';
 
@@ -53,11 +52,7 @@ export default function Day({ data }) {
 
       <main className={`${styles.main} ${night ? 'night' : ''}`}>
         <div className={styles.widgetblock}>
-          <Link href="/">
-            <a className={styles.backlink}>
-              <BiArrowBack color="#fff" size="2.5em" />
-            </a>
-          </Link>
+          <BackButton />
           <DayWidget weatherData={weatherData} date={date} />
         </div>
 
