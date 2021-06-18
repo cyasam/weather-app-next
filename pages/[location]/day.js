@@ -41,7 +41,7 @@ export default function Day({ data }) {
   const hoursData = getDayData(date, forecastday).hour;
 
   return (
-    <div className="container">
+    <div className={`${styles.container} ${night ? styles.night : ''}`}>
       <Head>
         <title>
           {location.name} / {location.region} : {dayOfWeek} - Weather App
@@ -50,7 +50,7 @@ export default function Day({ data }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={`${styles.main} ${night ? 'night' : ''}`}>
+      <main className={styles.main}>
         <div className={styles.widgetblock}>
           <BackButton />
           <DayWidget weatherData={weatherData} date={date} />

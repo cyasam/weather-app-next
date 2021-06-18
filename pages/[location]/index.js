@@ -24,7 +24,7 @@ export default function Location({ data }) {
   const night = checkIsNight(local_time, tz_id);
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${night ? styles.night : ''}`}>
       <Head>
         <title>
           {location.name} / {location.region} - Weather App
@@ -33,7 +33,7 @@ export default function Location({ data }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={`${styles.main} ${night ? 'night' : ''}`}>
+      <main className={styles.main}>
         <div className={styles.widgetblock}>
           <BackButton />
           <CurrentWidget weatherData={weatherData} />
