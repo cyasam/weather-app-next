@@ -25,8 +25,21 @@ a {
   --container-dark-bg-color: #2b2b2b;
 }
 
-main {
+.container {
   min-height: 100vh;
+  background-color: var(--container-bg-color);
+}
+
+.container.night {
+  background-color: var(--container-dark-bg-color);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding: 3rem;
 }
 
 @import 'nprogress/nprogress.css';

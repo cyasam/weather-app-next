@@ -40,7 +40,7 @@ export default function Home({ data }) {
   }, []);
 
   return (
-    <div className={`${styles.container} ${night ? styles.night : ''}`}>
+    <div className={`container ${night ? 'night' : ''}`}>
       <Head>
         <title>
           {location.name} / {location.region} - Weather App
@@ -49,7 +49,7 @@ export default function Home({ data }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main className="main">
         <CurrentWidget weatherData={weatherData} />
 
         <Grid data={forecastday}>
