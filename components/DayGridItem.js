@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import slugify from 'slugify';
 
 import { convertDayOfWeek } from '../util';
 import InfoWidget from './InfoWidget';
@@ -6,7 +7,7 @@ import styles from '../styles/GridItem.module.css';
 
 const DayGridItem = ({ item, location }) => {
   const dayOfWeek = convertDayOfWeek(item.date);
-  const { name } = location;
+  const { name, region, country } = location;
 
   const {
     maxtemp_c,
@@ -14,8 +15,11 @@ const DayGridItem = ({ item, location }) => {
     condition: { icon, text },
   } = item.day;
 
+  const url = `/${slugify(country, { lower: true })}/${slugify(region, {
+    lower: true,
+  })}/${slugify(name, { lower: true })}/day?q=${item.date}`;
   return (
-    <Link href={`/${name.toLowerCase()}/day?q=${item.date}`}>
+    <Link href={url}>
       <a className={styles.card}>
         <h3>{dayOfWeek}</h3>
 

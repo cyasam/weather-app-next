@@ -12,8 +12,6 @@ import {
 import { getWeatherData } from '../util/requests';
 import AppContext from '../context/AppContext';
 
-import styles from '../styles/Home.module.css';
-
 // Load Components
 const CurrentWidget = dynamic(() => import('../components/CurrentWidget'));
 const Grid = dynamic(() => import('../components/Grid'));

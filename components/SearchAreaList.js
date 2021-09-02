@@ -1,5 +1,7 @@
-import styles from '../styles/SearchAreaList.module.css';
 import Link from 'next/link';
+import slugify from 'slugify';
+
+import styles from '../styles/SearchAreaList.module.css';
 
 const SearchAreaList = ({ searchResult, listItemClick }) => {
   return (
@@ -28,11 +30,15 @@ SearchAreaList.NoItem = () => {
 };
 
 SearchAreaList.Item = ({ item, listItemClick }) => {
-  const { name, url } = item;
+  const { name, region, country } = item;
+
+  const url = `/${slugify(country, { lower: true })}/${slugify(region, {
+    lower: true,
+  })}/${slugify(name, { lower: true })}`;
 
   return (
     <li>
-      <Link href={`/${url}`}>
+      <Link href={url}>
         <a onClick={listItemClick}>
           <span className={styles.name}>{name}</span>
         </a>

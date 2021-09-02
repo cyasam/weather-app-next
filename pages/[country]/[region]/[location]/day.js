@@ -7,17 +7,19 @@ import {
   getDayData,
   getLocalDate,
   convertDayOfWeek,
-} from '../../util';
-import { getWeatherData } from '../../util/requests';
+} from '../../../../util';
+import { getWeatherData } from '../../../../util/requests';
 
-import BackButton from '../../components/BackButton';
+import BackButton from '../../../../components/BackButton';
 
-import styles from '../../styles/Day.module.css';
+import styles from '../../../../styles/Day.module.css';
 
 // Load Components
-const DayWidget = dynamic(() => import('../../components/DayWidget'));
-const Grid = dynamic(() => import('../../components/Grid'));
-const HourGridItem = dynamic(() => import('../../components/HourGridItem'));
+const DayWidget = dynamic(() => import('../../../../components/DayWidget'));
+const Grid = dynamic(() => import('../../../../components/Grid'));
+const HourGridItem = dynamic(() =>
+  import('../../../../components/HourGridItem')
+);
 
 export default function Day({ data }) {
   const router = useRouter();
@@ -65,7 +67,8 @@ export default function Day({ data }) {
 }
 
 export const getServerSideProps = async (context) => {
-  let query = context.query.location;
+  const { region, location, country } = context.query;
+  let query = `${location}, ${region}, ${country}`;
   const data = await getWeatherData({ query });
 
   if (!data) {

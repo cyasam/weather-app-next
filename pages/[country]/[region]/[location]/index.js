@@ -1,17 +1,19 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
-import { checkIsNight } from '../../util';
-import { getWeatherData } from '../../util/requests';
+import { checkIsNight } from '../../../../util';
+import { getWeatherData } from '../../../../util/requests';
 
-import BackButton from '../../components/BackButton';
+import BackButton from '../../../../components/BackButton';
 
-import styles from '../../styles/Day.module.css';
+import styles from '../../../../styles/Day.module.css';
 
 // Load Components
-const CurrentWidget = dynamic(() => import('../../components/CurrentWidget'));
-const Grid = dynamic(() => import('../../components/Grid'));
-const DayGridItem = dynamic(() => import('../../components/DayGridItem'));
+const CurrentWidget = dynamic(() =>
+  import('../../../../components/CurrentWidget')
+);
+const Grid = dynamic(() => import('../../../../components/Grid'));
+const DayGridItem = dynamic(() => import('../../../../components/DayGridItem'));
 
 export default function Location({ data }) {
   const weatherData = data;
@@ -54,7 +56,8 @@ export default function Location({ data }) {
 }
 
 export const getServerSideProps = async (context) => {
-  let query = context.query.location;
+  const { region, location, country } = context.query;
+  let query = `${location}, ${region}, ${country}`;
   const data = await getWeatherData({ query });
 
   if (!data) {
