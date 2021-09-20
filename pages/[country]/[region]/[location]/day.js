@@ -27,10 +27,6 @@ export default function Day({ data }) {
     setDate(date);
   }, []);
 
-  if (!date) {
-    return null;
-  }
-
   const weatherData = data;
 
   const {
@@ -40,6 +36,11 @@ export default function Day({ data }) {
   const { local_time, tz_id } = weatherData.location;
 
   const night = checkIsNight(local_time, tz_id);
+
+  if (!date) {
+    return <div className={`container ${night ? 'night' : ''}`}></div>;
+  }
+
   const dayOfWeek = convertDayOfWeek(date);
 
   const hoursData = getDayData(date, forecastday).hour;
