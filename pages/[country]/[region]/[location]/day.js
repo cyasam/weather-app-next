@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
@@ -20,12 +20,8 @@ const HourGridItem = dynamic(() =>
 
 export default function Day({ data }) {
   const router = useRouter();
-  const [date, setDate] = useState(null);
-
-  useEffect(() => {
-    const { q: date } = router.query;
-    setDate(date);
-  }, []);
+  const { q } = router.query;
+  const [date] = useState(q);
 
   const weatherData = data;
 
@@ -36,10 +32,6 @@ export default function Day({ data }) {
   const { local_time, tz_id } = weatherData.location;
 
   const night = checkIsNight(local_time, tz_id);
-
-  if (!date) {
-    return <div className={`container ${night ? 'night' : ''}`}></div>;
-  }
 
   const dayOfWeek = convertDayOfWeek(date);
 
