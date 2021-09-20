@@ -1,9 +1,12 @@
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import slugify from 'slugify';
 
 import { convertDayOfWeek } from '../util';
-import InfoWidget from './InfoWidget';
 import styles from '../styles/GridItem.module.css';
+
+// Load Components
+const InfoWidget = dynamic(() => import('./InfoWidget'));
 
 const DayGridItem = ({ item, location }) => {
   const dayOfWeek = convertDayOfWeek(item.date);
