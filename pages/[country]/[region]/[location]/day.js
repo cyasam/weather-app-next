@@ -1,18 +1,15 @@
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
-import {
-  checkIsNight,
-  getDayData,
-  getLocalDate,
-  convertDayOfWeek,
-} from '../../../../util';
+import { checkIsNight, getDayData, convertDayOfWeek } from '../../../../util';
 import { getWeatherData } from '../../../../util/requests';
 
 import BackButton from '../../../../components/BackButton';
 
 import styles from '../../../../styles/Day.module.css';
+import React from 'react';
 
 // Load Components
 const DayWidget = dynamic(() => import('../../../../components/DayWidget'));
@@ -23,7 +20,16 @@ const HourGridItem = dynamic(() =>
 
 export default function Day({ data }) {
   const router = useRouter();
-  let { q: date } = router.query;
+  const [date, setDate] = useState(null);
+
+  useEffect(() => {
+    const { q: date } = router.query;
+    setDate(date);
+  }, []);
+
+  if (!date) {
+    return null;
+  }
 
   const weatherData = data;
 
@@ -32,10 +38,6 @@ export default function Day({ data }) {
     location,
   } = weatherData;
   const { local_time, tz_id } = weatherData.location;
-
-  if (!date) {
-    date = getLocalDate(local_time, tz_id);
-  }
 
   const night = checkIsNight(local_time, tz_id);
   const dayOfWeek = convertDayOfWeek(date);
