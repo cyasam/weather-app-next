@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useCallback } from 'react';
 import requestIp from 'request-ip';
 
 import Head from 'next/head';
@@ -27,7 +27,11 @@ export default function Home({ data }) {
     forecast: { forecastday },
   } = weatherData;
   const { local_time, tz_id } = location;
-  const night = checkIsNight(local_time, tz_id);
+
+  const night = useCallback(
+    () => checkIsNight(local_time, tz_id),
+    [local_time, tz_id]
+  );
 
   useEffect(async () => {
     const pos = await getDatafromLatLon();
@@ -38,7 +42,7 @@ export default function Home({ data }) {
   }, []);
 
   return (
-    <div className={`container ${night ? 'night' : ''}`}>
+    <div className={`container ${night() ? 'night' : ''}`}>
       <Head>
         <title>
           {location.name} / {location.region} - Weather App

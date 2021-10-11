@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
@@ -31,14 +31,17 @@ export default function Day({ data }) {
   } = weatherData;
   const { local_time, tz_id } = weatherData.location;
 
-  const night = checkIsNight(local_time, tz_id);
+  const night = useCallback(
+    () => checkIsNight(local_time, tz_id),
+    [local_time, tz_id]
+  );
 
   const dayOfWeek = convertDayOfWeek(date);
 
   const hoursData = getDayData(date, forecastday).hour;
 
   return (
-    <div className={`container ${night ? 'night' : ''}`}>
+    <div className={`container ${night() ? 'night' : ''}`}>
       <Head>
         <title>
           {location.name} / {location.region} : {dayOfWeek} - Weather App
