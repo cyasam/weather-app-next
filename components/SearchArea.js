@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext, useRef } from 'react';
+import { useClickAway } from 'react-use';
 
 import AppContext from '../context/AppContext';
 
@@ -12,7 +13,7 @@ import LocationFinder from './LocationFinder';
 import styles from '../styles/SearchArea.module.css';
 
 const SearchArea = () => {
-  const searchInputRef = useRef(null);
+  const ref = useRef(null);
   const { searchResult, setSearchResult } = useContext(AppContext);
   const [query, setQuery] = useState('');
   const [showList, setShowList] = useState(false);
@@ -25,7 +26,7 @@ const SearchArea = () => {
   };
 
   const blurSearchText = () => {
-    setTimeout(() => setShowList(false), 100);
+    setShowList(false)
   };
 
   const focusSearchText = () => {
@@ -34,8 +35,12 @@ const SearchArea = () => {
 
   const listItemClick = () => {
     setQuery('');
-    blurSearchText();
+    blurSearchText()
   };
+
+  useClickAway(ref, () => {
+    blurSearchText()
+  });
 
   useEffect(async () => {
     if (debouncedQuery.length <= 2) {
@@ -75,14 +80,12 @@ const SearchArea = () => {
 
   return (
     <>
-      <div className={styles.area}>
+      <div className={styles.area} ref={ref}>
         <div className={styles.inputwrapper}>
           <SearchInput
-            ref={searchInputRef}
             value={query}
             className={styles.input}
             handleChange={changeSearchText}
-            handleBlur={blurSearchText}
             handleFocus={focusSearchText}
           />
         </div>
