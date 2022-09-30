@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
@@ -21,7 +21,7 @@ const HourGridItem = dynamic(() =>
 export default function Day({ data }) {
   const router = useRouter();
   const { q } = router.query;
-  const [date] = useState(q);
+  const date = q ?? new Date();
 
   const weatherData = data;
 
@@ -38,7 +38,7 @@ export default function Day({ data }) {
 
   const dayOfWeek = convertDayOfWeek(date);
 
-  const hoursData = getDayData(date, forecastday).hour;
+  const hoursData = getDayData(date, forecastday)?.hour;
 
   return (
     <div className={`container ${night() ? 'night' : ''}`}>

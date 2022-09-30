@@ -46,7 +46,7 @@ export const checkIsNight = (date, timezone) => {
 };
 
 export const getDayData = (date, allData) => {
-  return allData.filter((day) => day.date === date)[0];
+  return allData.find((day) => day.date === moment(date).format("YYYY-MM-DD"));
 };
 
 export const getLocation = () => {

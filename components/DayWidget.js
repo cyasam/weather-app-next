@@ -20,6 +20,10 @@ const DayWidget = ({ weatherData, date }) => {
   const dateFormatted = convertDateFormat(date, null, false);
   const dayOfWeek = convertDayOfWeek(date);
 
+  if (!dayData) {
+    return null;
+  }
+
   const {
     mintemp_c,
     maxtemp_c,
