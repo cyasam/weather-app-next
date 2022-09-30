@@ -33,12 +33,16 @@ export default function Home({ data }) {
     [local_time, tz_id]
   );
 
-  useEffect(async () => {
-    const pos = await getDatafromLatLon();
+  useEffect(() => {
+    const run = async () => {
+      const pos = await getDatafromLatLon();
 
-    if (!pos) return;
+      if (!pos) return;
 
-    await handleHomepageLocation(pos, homepageDispatch);
+      await handleHomepageLocation(pos, homepageDispatch);
+    }
+
+    run()
   }, []);
 
   return (

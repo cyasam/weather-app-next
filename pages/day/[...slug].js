@@ -3,19 +3,19 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
-import { checkIsNight, getDayData, convertDayOfWeek } from '../../../../util';
-import { getWeatherData } from '../../../../util/requests';
+import { checkIsNight, getDayData, convertDayOfWeek } from '../../util';
 
-import BackButton from '../../../../components/BackButton';
+import BackButton from '../../components/BackButton';
 
-import styles from '../../../../styles/Day.module.css';
+import styles from '../../styles/Day.module.css';
 import React from 'react';
+import { getWeatherData } from '../../util/requests';
 
 // Load Components
-const DayWidget = dynamic(() => import('../../../../components/DayWidget'));
-const Grid = dynamic(() => import('../../../../components/Grid'));
+const DayWidget = dynamic(() => import('../../components/DayWidget'));
+const Grid = dynamic(() => import('../../components/Grid'));
 const HourGridItem = dynamic(() =>
-  import('../../../../components/HourGridItem')
+  import('../../components/HourGridItem')
 );
 
 export default function Day({ data }) {
@@ -65,8 +65,18 @@ export default function Day({ data }) {
 }
 
 export const getServerSideProps = async (context) => {
-  const { region, location, country } = context.query;
-  let query = `${location}, ${region}, ${country}`;
+  const { slug } = context.query;
+
+  const country = slug[0]
+  const location = slug[1]
+  let query = `${location}, ${country}`;
+
+  if (slug.length === 3) {
+    const region = slug[1]
+    const location = slug[2]
+    query = `${location}, ${region}, ${country}`;
+  }
+
   const data = await getWeatherData({ query });
 
   if (!data) {

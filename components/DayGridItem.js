@@ -15,9 +15,9 @@ const DayGridItem = ({ item, location }) => {
     condition: { icon, text },
   } = item.day;
 
-  const url = `/${slugify(country, { lower: true })}/${slugify(region, {
+  const url = `/day/${slugify(country, { lower: true })}${region && '/' + slugify(region, {
     lower: true,
-  })}/${slugify(name, { lower: true })}/day?q=${item.date}`;
+  })}/${slugify(name, { lower: true })}?q=${item.date}`;
   return (
     <Link href={url}>
       <a className={styles.card}>

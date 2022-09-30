@@ -42,19 +42,23 @@ const SearchArea = () => {
     blurSearchText()
   });
 
-  useEffect(async () => {
-    if (debouncedQuery.length <= 2) {
-      setShowList(false);
+  useEffect(() => {
+    const run = async () => {
+      if (debouncedQuery.length <= 2) {
+        setShowList(false);
 
-      setSearchResult((prevState) => {
-        return {
-          ...prevState,
-          loading: false,
-          data: null,
-          error: null,
-        };
-      });
-    } else if (debouncedQuery.length > 2) {
+        setSearchResult((prevState) => {
+          return {
+            ...prevState,
+            loading: false,
+            data: null,
+            error: null,
+          };
+        });
+
+        return;
+      }
+
       setShowList(true);
 
       setSearchResult((prevState) => {
@@ -76,6 +80,8 @@ const SearchArea = () => {
         };
       });
     }
+
+    run()
   }, [debouncedQuery]);
 
   return (

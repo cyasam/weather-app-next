@@ -32,7 +32,7 @@ SearchAreaList.NoItem = () => {
 SearchAreaList.Item = ({ item, listItemClick }) => {
   const { name, region, country } = item;
 
-  const url = `/${slugify(country, { lower: true })}/${slugify(region, {
+  const url = `/general/${slugify(country, { lower: true, trim: true })}${region && '/' + slugify(region, {
     lower: true,
   })}/${slugify(name, { lower: true })}`;
 

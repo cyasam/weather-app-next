@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps, router }) {
       }}
     >
       <SearchBox />
-      <AnimatePresence exitBeforeEnter initial={false}>
+      <AnimatePresence mode='wait'>
         <Component key={router.route} {...pageProps} />
       </AnimatePresence>
     </AppContext.Provider>
