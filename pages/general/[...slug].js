@@ -63,7 +63,6 @@ export default function Location({ data }) {
 
 export const getServerSideProps = async (context) => {
   const { slug } = context.query;
-  console.log(slug)
 
   const country = slug[0]
   const location = slug[1]
