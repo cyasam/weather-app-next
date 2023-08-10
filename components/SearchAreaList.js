@@ -6,7 +6,7 @@ import styles from '../styles/SearchAreaList.module.css';
 const SearchAreaList = ({ searchResult, listItemClick }) => {
   return (
     <>
-      {searchResult.length > 1 ? (
+      {searchResult.length > 0 ? (
         <ul className={styles.list}>
           {searchResult.map((item) => {
             return (
